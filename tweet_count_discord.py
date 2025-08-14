@@ -23,7 +23,7 @@ DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1405472702990651462/zyu4
 def count_tweets(hashtag):
     # Count tweets from last 5 hours
     since_time = datetime.utcnow() - timedelta(hours=5)
-    query = f\"#{hashtag} since:{since_time.strftime('%Y-%m-%d_%H:%M:%S_UTC')}\"
+    query = f"#{hashtag} since:{since_time.strftime('%Y-%m-%d_%H:%M:%S_UTC')}"
     count = 0
     for _ in sntwitter.TwitterSearchScraper(query).get_items():
         count += 1
@@ -34,10 +34,10 @@ def send_discord():
     results = []
     for tag in HASHTAGS:
         count = count_tweets(tag)
-        results.append(f\"#{tag}: {count}\")
-    message = f\"📊 **Tweet count in last 5h** (since {since_time}):\\n\" + \"\\n\".join(results)
-    requests.post(DISCORD_WEBHOOK_URL, json={\"content\": message})
-    print(\"Sent to Discord.\")
+        results.append(f"#{tag}: {count}")
+    message = f"📊 **Tweet count in last 5h** (since {since_time}):\n" + "\n".join(results)
+    requests.post(DISCORD_WEBHOOK_URL, json={"content": message})
+    print("Sent to Discord.")
 
-if __name__ == \"__main__\":
+if __name__ == "__main__":
     send_discord()
